@@ -35,7 +35,7 @@ func TestMain(m *testing.M) {
 	os.Exit(exitCode)
 }
 
-func TestCheckForArgumentsM1(t *testing.T) {
+func TestCheckForArguments(t *testing.T) {
 	t.Run("no args", func(t *testing.T) {
 		dir, err := os.Getwd()
 		if err != nil {
