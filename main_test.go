@@ -35,7 +35,8 @@ func TestMain(m *testing.M) {
 	os.Exit(exitCode)
 }
 
-func TestCheckForArguments(t *testing.T) {
+/*
+func TestCheckForArgumentsM1(t *testing.T) {
 	t.Run("no args", func(t *testing.T) {
 		dir, err := os.Getwd()
 		if err != nil {
@@ -61,6 +62,26 @@ func TestCheckForArguments(t *testing.T) {
 			t.Fatal("Did not validate command line arguments properly")
 		}
 	})
+}
+*/
+
+func TestCheckForArgumentsM1(t *testing.T) {
+		dir, err := os.Getwd()
+		if err != nil {
+			t.Fatal(err)
+		}
+		// Runs the program with not enough arguments.
+		cmd := exec.Command(path.Join(dir, binaryName), []string{}...)
+		output, err := cmd.CombinedOutput()
+		if err == nil || !strings.Contains(string(output), errInvalidArguments.Error()) {
+			t.Fatal("Did not validate command line arguments properly")
+		}
+
+		cmd = exec.Command(path.Join(dir, binaryName), []string{"one", "two"}...)
+		output, err = cmd.CombinedOutput()
+		if err == nil || !strings.Contains(string(output), errInvalidArguments.Error()) {
+			t.Fatal("Did not validate command line arguments properly")
+		}
 }
 
 func TestAssignsToOriginUnitM1(t *testing.T) {
