@@ -36,7 +36,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestCheckForArgumentsM1(t *testing.T) {
-	t.Run("no args", func(t *testing.T) {
+	t.Run("args", func(t *testing.T) {
 		dir, err := os.Getwd()
 		if err != nil {
 			t.Fatal(err)
@@ -45,11 +45,11 @@ func TestCheckForArgumentsM1(t *testing.T) {
 		cmd := exec.Command(path.Join(dir, binaryName), []string{}...)
 		output, err := cmd.CombinedOutput()
 		if err == nil || !strings.Contains(string(output), errInvalidArguments.Error()) {
-			t.Fatal("Did not validate command line arguments properly")
+			t.Fatal("Did not handle too few arguments.")
 		}
 	})
 
-	t.Run("too many args", func(t *testing.T) {
+	t.Run("args", func(t *testing.T) {
 		dir, err := os.Getwd()
 		if err != nil {
 			t.Fatal(err)
@@ -58,7 +58,7 @@ func TestCheckForArgumentsM1(t *testing.T) {
 		cmd := exec.Command(path.Join(dir, binaryName), []string{"one", "two"}...)
 		output, err := cmd.CombinedOutput()
 		if err == nil || !strings.Contains(string(output), errInvalidArguments.Error()) {
-			t.Fatal("Did not validate command line arguments properly")
+			t.Fatal("Did not handle too many arguments")
 		}
 	})
 }
